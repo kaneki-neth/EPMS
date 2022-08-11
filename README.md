@@ -16,7 +16,7 @@ npm run production
 
 ## Quick Installation
 - Clone this repo
-- `cd EMPS`
+- `cd EPMS`
 - Copy __.env.example__ file to __.env__ and edit database credentials there
 - Run __composer install__
 - Run __php artisan key:generate__
