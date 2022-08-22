@@ -13,7 +13,6 @@ class Task extends Model
     protected $fillable = [
         'owner_id',
         'colaborator_id',
-        'accomplishment_id',
         'objectives',
         'strategies',
         'specific_action',
@@ -30,10 +29,5 @@ class Task extends Model
     public function colaborator(): BelongsTo
     {
         return $this->belongsTo(OfficeMember::class);
-    }
-
-    public function accomplishment(): BelongsTo
-    {
-        return $this->belongsTo(Accomplishment::class);
     }
 }

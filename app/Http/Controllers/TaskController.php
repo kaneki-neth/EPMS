@@ -35,7 +35,6 @@ class TaskController extends Controller
         Task::create($request->validate([
             'owner_id' => 'required',
             'colaborator_id' => 'required',
-            'accomplishment_id' => 'required',
             'objectives' => 'required',
             'strategies' => 'required',
             'specific_action' => 'required',

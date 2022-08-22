@@ -2,31 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Accomplishment;
+use App\Models\Opcr;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AccomplishmentController extends Controller
+class OpcrController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
     public function index(): JsonResponse
     {
-        $accomplishments = Accomplishment::query()
-            ->with([
-                'quarter',
-                'rate',
-            ])->get();
+        $opcrs = Opcr::all();
 
-        return response()->json([
-            'data' => $accomplishments,
-            'total' => $accomplishments->count()
-        ]);
+        return Response()->json([
+            'data' => $opcrs,
+            'total' => $opcrs->count()
+        ], 200);
     }
 
     /**
@@ -37,18 +32,14 @@ class AccomplishmentController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
-        Accomplishment::create($request->validate([
-            'task_id' => 'required',
-            'quarter_id' => 'required',
-            'rate_id' => 'required',
-            'target' => 'required',
-            'actual_accomplishment' => 'required',
-            'remarks' => 'required'
+        Opcr::create($request->validate([
+            'office_member_id' => 'required',
+            'accomplishment_id' => 'required'
         ]));
 
-        return response()->json([
+        return Response()->json([
             'status' => true,
-            'message' => 'Accomplishment added successfully'
+            'message' => 'OPCR created successfully'
         ], Response::HTTP_CREATED);
     }
 
@@ -58,9 +49,13 @@ class AccomplishmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id): JsonResponse
     {
-        return Accomplishment::find($id);
+        $opcrs = Opcr::find($id);
+
+        return Response()->json([
+            'data' => $opcrs,
+        ], 200);
     }
 
     /**
@@ -72,13 +67,13 @@ class AccomplishmentController extends Controller
      */
     public function update(Request $request, $id): JsonResponse
     {
-        $accomplishments = Accomplishment::find($id);
-        $accomplishments->update($request->all());
+        $opcrs = Opcr::find($id);
+        $opcrs->update($request->all());
 
-        return response()->json([
+        return Response()->json([
             'status' => true,
-            'message' => 'Accomplishment updated succesfully'
-        ]);
+            'message' => 'Opcr updated successfully'
+        ], 200);
     }
 
     /**
@@ -89,11 +84,11 @@ class AccomplishmentController extends Controller
      */
     public function destroy($id): JsonResponse
     {
-        Accomplishment::destroy($id);
+        Opcr::destroy($id);
 
-        return response()->json([
+        return Response()->json([
             'status' => true,
-            'message' => "Accomplishment erased and deleted successfully"
-        ]);
+            'message' => 'Opcr deleted'
+        ], 200);
     }
 }

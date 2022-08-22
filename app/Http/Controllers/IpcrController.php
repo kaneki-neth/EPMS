@@ -2,31 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Accomplishment;
+use App\Models\Ipcr;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AccomplishmentController extends Controller
+class IpcrController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
     public function index(): JsonResponse
     {
-        $accomplishments = Accomplishment::query()
-            ->with([
-                'quarter',
-                'rate',
-            ])->get();
+        $ipcrs = Ipcr::all();
 
-        return response()->json([
-            'data' => $accomplishments,
-            'total' => $accomplishments->count()
-        ]);
+        return Response()->json([
+            'data' => $ipcrs,
+            'total' => $ipcrs->count()
+        ], 200);
     }
 
     /**
@@ -37,18 +32,14 @@ class AccomplishmentController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
-        Accomplishment::create($request->validate([
-            'task_id' => 'required',
-            'quarter_id' => 'required',
-            'rate_id' => 'required',
-            'target' => 'required',
-            'actual_accomplishment' => 'required',
-            'remarks' => 'required'
+        Ipcr::create($request->validate([
+            'user_id' => 'required',
+            'accomplishment_id' => 'required'
         ]));
 
-        return response()->json([
+        return Response()->json([
             'status' => true,
-            'message' => 'Accomplishment added successfully'
+            'message' => 'IPCR created'
         ], Response::HTTP_CREATED);
     }
 
@@ -58,9 +49,13 @@ class AccomplishmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id): JsonResponse
     {
-        return Accomplishment::find($id);
+        $ipcrs = Ipcr::find($id);
+
+        return Response()->json([
+            'data' => $ipcrs,
+        ], 200);
     }
 
     /**
@@ -72,13 +67,13 @@ class AccomplishmentController extends Controller
      */
     public function update(Request $request, $id): JsonResponse
     {
-        $accomplishments = Accomplishment::find($id);
-        $accomplishments->update($request->all());
+        $ipcrs = Ipcr::find($id);
+        $ipcrs->update($request->all());
 
-        return response()->json([
+        return Response()->json([
             'status' => true,
-            'message' => 'Accomplishment updated succesfully'
-        ]);
+            'message' => 'Updated succesfully'
+        ], 200);
     }
 
     /**
@@ -89,11 +84,11 @@ class AccomplishmentController extends Controller
      */
     public function destroy($id): JsonResponse
     {
-        Accomplishment::destroy($id);
+        Ipcr::destroy($id);
 
-        return response()->json([
+        return Response()->json([
             'status' => true,
-            'message' => "Accomplishment erased and deleted successfully"
-        ]);
+            'message' => 'Deleted successfully'
+        ], 200);
     }
 }

@@ -11,6 +11,7 @@ class Accomplishment extends Model
     use HasFactory;
 
     protected $fillable = [
+        'task_id',
         'quarter_id',
         'rate_id',
         'target',
@@ -18,6 +19,10 @@ class Accomplishment extends Model
         'remarks',
     ];
 
+    public function task(): BelongsTo
+    {
+        return $this->belongsTo(Task::class);
+    }
     public function quarter(): BelongsTo
     {
         return $this->belongsTo(Quarter::class);

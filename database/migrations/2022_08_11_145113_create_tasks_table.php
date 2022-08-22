@@ -17,7 +17,6 @@ class CreateTasksTable extends Migration
             $table->id();
             $table->foreignId('owner_id')->constrained('office_members')->onUpdate('cascade');
             $table->foreignId('colaborator_id')->constrained('office_members')->onUpdate('cascade');
-            $table->foreignId('accomplishment_id')->constrained('accomplishments')->onUpdate('cascade');
             $table->string('objectives');
             $table->string('strategies');
             $table->string('specific_action');

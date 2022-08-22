@@ -15,6 +15,7 @@ class CreateAccomplishmentsTable extends Migration
     {
         Schema::create('accomplishments', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('task_id')->constrained('tasks')->onUpdate('cascade');
             $table->foreignId('quarter_id')->constrained('quarters')->onUpdate('cascade');
             $table->foreignId('rate_id')->constrained('ratings')->onUpdate('cascade');
             $table->string('target');
